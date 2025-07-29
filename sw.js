@@ -1,10 +1,11 @@
 const CACHE_NAME = 'offline-cache-v1';
 const ASSETS = [
     '/',
-    'index.html',
-    './assets/index-3MKChovF.css',
-    'app.js',
-    './assets/logo.png' // Add all required files
+    '/index.html',
+    './assets/index-tPPQlsHe.css',
+    './assets/index-BHK8DZrL.js',
+    '/Soldier.glb',
+    '/hall.env' // Add all required files
 ];
 
 // 🔧 Install Event
