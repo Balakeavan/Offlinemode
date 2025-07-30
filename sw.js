@@ -3,8 +3,8 @@ const ASSETS = [
     '/',
     '/app.js',
     '/index.html',
-    './assets/index-BHK8DZrL.css',
-    './assets/index-tPPQlsHe.js',
+    '/assets/index-BHK8DZrL.css',
+    '/assets/index-tPPQlsHe.js',
     '/Soldier.glb',
     '/hall.env' // Add all required files
 ];
