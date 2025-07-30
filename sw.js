@@ -1,6 +1,5 @@
 const CACHE_NAME = 'offline-cache-v1';
-const ASSETS = [
-    '/',
+const ASSETS = [ 
     '/app.js',
     '/index.html',
     '/Soldier.glb',
