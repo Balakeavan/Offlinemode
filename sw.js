@@ -2,6 +2,8 @@ const CACHE_NAME = 'offline-cache-v1';
 const ASSETS = [ 
     '/',
     '/app.js',
+    './assets/index-tPPQlsHe.css',
+    './assets/index-tPPQlsHe.css',
     '/index.html',
     '/Soldier.glb',
     '/hall.env' // Add all required files
