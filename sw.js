@@ -9,43 +9,42 @@ const ASSETS = [
     '/hall.env' // Add all required files
 ];
 
-// 🔧 Install Event
+// 🔧 Install Service Worker
 self.addEventListener('install', event => {
+    console.log('[SW] Installing...');
     event.waitUntil(
         caches.open(CACHE_NAME)
-            .then(cache => cache.addAll(ASSETS))
+            .then(cache => {
+                console.log('[SW] Caching app shell');
+                return cache.addAll(ASSETS);
+            })
     );
-    self.skipWaiting();
+    self.skipWaiting(); // Force waiting SW to become active
 });
 
-// ♻️ Activate Event
+// ♻️ Activate Service Worker
 self.addEventListener('activate', event => {
+    console.log('[SW] Activating...');
     event.waitUntil(
-        caches.keys().then(cacheNames => {
-            return Promise.all(
-                cacheNames.filter(c => c !== CACHE_NAME).map(c => caches.delete(c))
-            );
+        caches.keys().then(keys =>
+            Promise.all(
+                keys.filter(key => key !== CACHE_NAME)
+                    .map(key => caches.delete(key))
+            )
+        )
+    );
+    self.clients.claim(); // Immediately control pages
+});
+
+// 🌐 Fetch handler with fallback
+self.addEventListener('fetch', event => {
+    event.respondWith(
+        caches.match(event.request).then(response => {
+            return response || fetch(event.request).catch(() => {
+                if (event.request.mode === 'navigate') {
+                    return caches.match('/index.html');
+                }
+            });
         })
     );
-    self.clients.claim();
 });
-
-// 🌐 Fetch Event
-self.addEventListener('fetch', event => {
-    console.log('Fetching:', event.request.url); // Add this line
-    event.respondWith(
-        caches.match(event.request)
-            .then(response => {
-                if (response) {
-                    console.log('Serving from cache:', event.request.url);
-                    return response;
-                }
-                console.log('Fetching from network:', event.request.url);
-                return fetch(event.request);
-            })
-            .catch(() => {
-                console.log('Fetch failed. Possibly offline.');
-            })
-    );
-});
-
